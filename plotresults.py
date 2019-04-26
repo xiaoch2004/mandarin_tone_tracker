@@ -111,11 +111,11 @@ def wavPitchCrepeAnal(filepath):
 
 if __name__ == "__main__":
     test = False
-    dirname = 'audio/Glen/'
+    dirname = 'audio/'
     files = os.listdir(dirname)
     paths = [dirname+file for file in files]
     if test:
-        dirname = 'results/'
+        dirname = 'test/'
         files = os.listdir(dirname)
         paths = [dirname+file for file in files]
         plotFourFigures(paths[12:16])
@@ -127,7 +127,7 @@ if __name__ == "__main__":
         dirname = os.path.dirname(filepath)
         time, frequency = preProcess(x, sr, time, frequency, confidence)
         output = np.column_stack((time, frequency))
-        # np.savetxt(filename[:-3] + 'csv', output, delimiter=',')
+        np.savetxt('result/' + filename[:-3] + 'csv', output, delimiter=',')
         plt.plot(time, frequency)
         plt.xlim(time[0], time[-1])
         plt.ylim(100, 500)

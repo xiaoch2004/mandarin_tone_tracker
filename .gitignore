@@ -108,6 +108,7 @@ venv.bak/
 .csv
 
 # folders
+audio-archive/
+test/
 temp/
-audio/
 .vscode/
