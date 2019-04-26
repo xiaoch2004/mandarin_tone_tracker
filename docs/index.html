@@ -1,1 +1,159 @@
-<h1>INDEX PAGE</h1>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>Scrolling Nav - Start Bootstrap Template</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="css/scrolling-nav.css" rel="stylesheet" />
+
+    <script>
+      function displayRow(filename) {
+        html = "";
+        let audiopath = "resource/audio/" + filename + ".wav";
+        let imagepath = "resource/figure/" + filename + ".png";
+        let audiohtml =
+          '<div class="row"><div class="col"><audio src="' +
+          audiopath +
+          '" controls><p>You browser does not\
+            support HTML5 audio. <a href="' +
+          audiopath +
+          '">Here \'s the link</a> to the audio instead. </p></audio></div>\
+            <br><div class="col"><img src="' +
+          imagepath +
+          '" height=200 width=200></img></div></div>';
+        document.write(audiohtml);
+      }
+    </script>
+  </head>
+
+  <body id="page-top">
+    <!-- Navigation -->
+    <nav
+      class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
+      id="mainNav"
+    >
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">Home</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarResponsive"
+          aria-controls="navbarResponsive"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#intro"
+                >Introduction</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#results">Results</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="bg-primary text-white">
+      <div class="container text-center">
+        <h1>Madanrin Tone Tracker</h1>
+        <p class="lead">
+          Plot tone contour for mandarin learners/普通话声调轮廓绘制
+        </p>
+      </div>
+    </header>
+
+    <section id="intro">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2>Introduction</h2>
+            <p class="lead">
+              The mandarin_tone_tracker plots mandarin tone contour for mandarin
+              learners. The code use
+              <a href="https://github.com/marl/crepe">crepe</a> to extract
+              pitch. It also adds these post-processing methods to adapt
+              mandarin frequency characteristics:
+            </p>
+            <ul>
+              <li>
+                Eliminate frames with too-low frequencies (default threshold
+                100.0Hz)
+              </li>
+              <li>
+                Eliminate frames with too-low confidence (default threshold
+                0.40)
+              </li>
+              <li>
+                Eliminate frames with too-low energy (default threshold 5e-4)
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="results" class="bg-light">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2>Results</h2>
+            <p class="lead">
+              We have already plotted some of the recorded pronunciations.
+              Please listen to the spoken samples and see the tone contour plots
+              on the right.
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <script>
+              displayRow("a1-cg2");
+              displayRow("a2-cg2");
+              displayRow("a3-cg2");
+              displayRow("a4-cg2");
+            </script>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">
+          Copyright@Xiao Chang<br />
+          Template from <a href="https://startbootstrap.com">Start Bootstrap</a>
+        </p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom JavaScript for this theme -->
+    <script src="js/scrolling-nav.js"></script>
+  </body>
+</html>

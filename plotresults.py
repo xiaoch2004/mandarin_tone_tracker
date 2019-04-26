@@ -109,26 +109,33 @@ def wavPitchCrepeAnal(filepath):
     return (time, frequency, confidence, x, sr)
 
 
+def genFig(filepath):
+    time, frequency, confidence, x, sr = wavPitchCrepeAnal(filepath)
+    filename = os.path.basename(filepath)
+    dirname = os.path.dirname(filepath)
+    time, frequency = preProcess(x, sr, time, frequency, confidence)
+    output = np.column_stack((time, frequency))
+    # np.savetxt('result/' + filename[:-3] + 'csv', output, delimiter=',')
+    plt.plot(time, frequency)
+    plt.xlim(time[0], time[-1])
+    plt.ylim(100, 500)
+    plt.axis('off')
+    plt.savefig('docs/resource/figure/'+filename[:-3] + 'png')
+    plt.close()
+
+
 if __name__ == "__main__":
     test = False
-    dirname = 'audio/'
+    dirname = 'docs/resource/audio/'
     files = os.listdir(dirname)
     paths = [dirname+file for file in files]
     if test:
         dirname = 'test/'
         files = os.listdir(dirname)
         paths = [dirname+file for file in files]
-        plotFourFigures(paths[12:16])
+        plotFourFigures(paths[0:4])
     else:
-        filepath = paths[1]
+        filepath = paths[3]
         print(filepath)
-        time, frequency, confidence, x, sr = wavPitchCrepeAnal(filepath)
-        filename = os.path.basename(filepath)
-        dirname = os.path.dirname(filepath)
-        time, frequency = preProcess(x, sr, time, frequency, confidence)
-        output = np.column_stack((time, frequency))
-        np.savetxt('result/' + filename[:-3] + 'csv', output, delimiter=',')
-        plt.plot(time, frequency)
-        plt.xlim(time[0], time[-1])
-        plt.ylim(100, 500)
-        plt.show()
+        for path in paths:
+            genFig(path)
