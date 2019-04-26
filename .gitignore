@@ -102,3 +102,12 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# output files
+.wav
+.csv
+
+# folders
+temp/
+audio/
+.vscode/
