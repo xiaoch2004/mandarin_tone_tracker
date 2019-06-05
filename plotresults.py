@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import crepe
 from scipy.io.wavfile import read
+import base64
 
 INT16_FAC = (2**15)-1
 INT32_FAC = (2**31)-1
@@ -44,7 +45,7 @@ def processTable(table):
     # Adjust the mean
     mean = np.nanmean(table[:, 1], axis=0)
     std = np.nanstd(table[:, 1], axis=0)
-    diff = 300 - mean
+    diff = target_mean - mean
     table[:, 1] = (table[:, 1] + diff)
     return table
 
@@ -126,7 +127,8 @@ def genFig(filepath):
 
 if __name__ == "__main__":
     test = False
-    dirname = 'docs/resource/audio/'
+    # dirname = 'docs/resource/audio/'
+    dirname = 'audio-archive/chinesewoman1/'
     files = os.listdir(dirname)
     paths = [dirname+file for file in files]
     if test:
@@ -135,7 +137,7 @@ if __name__ == "__main__":
         paths = [dirname+file for file in files]
         plotFourFigures(paths[0:4])
     else:
-        filepath = paths[3]
+        filepath = paths[1]
         print(filepath)
         for path in paths:
             genFig(path)

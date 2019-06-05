@@ -18,8 +18,18 @@
     <link href="css/scrolling-nav.css" rel="stylesheet" />
 
     <script>
+      function hasGetUserMedia() {
+        return !!(
+          navigator.mediaDevices && navigator.mediaDevices.getUserMedia
+        );
+      }
+
+      if (hasGetUserMedia()) {
+        // Good to go!
+      } else {
+        alert("getUserMedia() is not supported by your browser");
+      }
       function displayRow(filename) {
-        html = "";
         let audiopath = "resource/audio/" + filename + ".wav";
         let imagepath = "resource/figure/" + filename + ".png";
         let audiohtml =
@@ -65,6 +75,9 @@
             </li>
             <li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="#results">Results</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#demo">Demo</a>
             </li>
           </ul>
         </div>
@@ -135,6 +148,36 @@
       </div>
     </section>
 
+    <section id="demo" class="bg-light">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2>Try it by yourself!</h2>
+            <p class="lead">
+              <ul>
+                <li>Click on <strong class="text-primary">Record</strong> to start recording</li>
+                <li>Click 'Allow' when the broswer ask you to access the microphone</li>
+                <li>When you done, click <strong class="text-danger">Stop</strong> and your recording will show below</li>
+              </ul>
+            </p>
+            <div id="controls">
+              <button class="btn btn-primary btn-lg" id="recordButton">
+                Record
+              </button>
+              <button class="btn btn-primary btn-lg" id="pauseButton" disabled>
+                Pause
+              </button>
+              <button class="btn btn-danger btn-lg" id="stopButton" disabled>
+                Stop
+              </button>
+              <div id="formats">Format: start recording to see sample rate</div>
+              <ol id="recordingsList"></ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Footer -->
     <footer class="py-5 bg-dark">
       <div class="container">
@@ -155,5 +198,7 @@
 
     <!-- Custom JavaScript for this theme -->
     <script src="js/scrolling-nav.js"></script>
+    <script src="js/recorder.js"></script>
+    <script src="js/app.js"></script>
   </body>
 </html>

@@ -108,7 +108,9 @@ venv.bak/
 .csv
 
 # folders
+audio/
 audio-archive/
 test/
 temp/
+docs/resource/figure/
 .vscode/
