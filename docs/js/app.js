@@ -1,3 +1,8 @@
+// Include Plotly.js in this file
+var plotlyobject = document.createElement("script");
+plotlyobject.src = "https://cdn.plot.ly/plotly-latest.min.js";
+document.getElementsByTagName("head")[0].appendChild(plotlyobject);
+
 //webkitURL is deprecated but nevertheless
 URL = window.URL || window.webkitURL;
 
@@ -5,6 +10,7 @@ var gumStream; //stream from getUserMedia()
 var rec; //Recorder.js object
 var input; //MediaStreamAudioSourceNode we'll be recording
 var currentSampleRate = undefined;
+var isFigureThere = false;
 
 // shim for AudioContext when it's not avb.
 var AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -21,7 +27,9 @@ pauseButton.addEventListener("click", pauseRecording);
 
 function startRecording() {
   console.log("recordButton clicked");
-
+  if (isFigureThere) {
+    document.getElementById("figurediv").innerHTML = "";
+  }
   /*
 		Simple constraints object, for more advanced audio features see
 		https://addpipe.com/blog/audio-constraints-getusermedia/
@@ -132,10 +140,14 @@ function createResult(blob) {
     var au = document.createElement("audio");
     var analyzeButton = document.createElement("button");
     var infodiv = document.createElement("div");
+    var figurediv = document.createElement("div");
+    figurediv.id = "figurediv";
 
     au.controls = true;
     au.src = url;
     li.appendChild(au);
+    figurediv.style.width = 600;
+    figurediv.style.height = 250;
 
     analyzeButton.className = "btn btn-primary";
     analyzeButton.innerHTML = "Analyze";
@@ -153,6 +165,7 @@ function createResult(blob) {
     //   xhr.send(fd);
     // });
     analyzeButton.onclick = function() {
+      figurediv.innerHTML = "";
       var xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function() {
         if (this.readyState < 4) {
@@ -160,9 +173,25 @@ function createResult(blob) {
         } else {
           infodiv.innerHTML = "Done!";
           textFromServer = this.responseText;
-          console.log(textFromServer);
           result = JSON.parse(textFromServer.replace(/\bNaN\b/g, "null"));
-          console.log(result["frequency"]);
+          var plotdata = [{ x: result["time"], y: result["frequency"] }];
+          var layout = {
+            xaxis: {
+              title: "time",
+              showgrid: false,
+              zeroline: false,
+              showline: false
+            },
+            yaxis: {
+              title: "Relative Frequency",
+              range: [100, 500],
+              showgrid: false,
+              zeroline: false,
+              showline: false
+            }
+          };
+          Plotly.newPlot(figurediv, plotdata, layout);
+          isFigureThere = true;
         }
       };
       targetURL = "http://35.247.166.67:5000/mandarin-pitch-tracking-crepe";
@@ -179,6 +208,7 @@ function createResult(blob) {
     li.appendChild(document.createTextNode(" ")); //add a space in between
     li.appendChild(analyzeButton);
     li.appendChild(infodiv);
+    li.appendChild(figurediv);
 
     if (recordingsList.children.length > 0) {
       while (recordingsList.firstChild) {
