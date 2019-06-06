@@ -194,7 +194,7 @@ function createResult(blob) {
           isFigureThere = true;
         }
       };
-      targetURL = "http://35.247.166.67:5000/mandarin-pitch-tracking-crepe";
+      targetURL = "https://35.247.166.67:5000/mandarin-pitch-tracking-crepe";
       xhttp.open("POST", targetURL, true);
       var wavobj = {
         sr: currentSampleRate,
