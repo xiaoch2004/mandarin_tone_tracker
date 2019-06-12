@@ -10,6 +10,7 @@ var gumStream; //stream from getUserMedia()
 var rec; //Recorder.js object
 var input; //MediaStreamAudioSourceNode we'll be recording
 var currentSampleRate = undefined;
+var isAudioThere = false;
 var isFigureThere = false;
 
 // shim for AudioContext when it's not avb.
@@ -27,8 +28,8 @@ pauseButton.addEventListener("click", pauseRecording);
 
 function startRecording() {
   console.log("recordButton clicked");
-  if (isFigureThere) {
-    document.getElementById("figurediv").innerHTML = "";
+  if (isAudioThere) {
+    recordingsList.removeChild(recordingsList.firstChild);
   }
   /*
 		Simple constraints object, for more advanced audio features see
@@ -83,6 +84,7 @@ function startRecording() {
       rec.record();
 
       console.log("Recording started");
+      recordButton.innerHTML = "Recording...";
     })
     .catch(function(err) {
       //enable the record button if getUserMedia() fails
@@ -107,6 +109,9 @@ function pauseRecording() {
 
 function stopRecording() {
   console.log("stopButton clicked");
+  if (!isAudioThere) {
+    isAudioThere = true;
+  }
 
   //disable the stop button, enable the record too allow for new recordings
   stopButton.disabled = true;
@@ -121,6 +126,7 @@ function stopRecording() {
 
   //stop microphone access
   gumStream.getAudioTracks()[0].stop();
+  recordButton.innerHTML = "Record";
 
   //create the wav blob and pass it on to createDownloadLink
   // rec.exportWAV(createDownloadLink);
@@ -169,7 +175,8 @@ function createResult(blob) {
       var xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function() {
         if (this.readyState < 4) {
-          infodiv.innerHTML = "Analyzing...";
+          infodiv.innerHTML =
+            "Analyzing, it may take a while according to audio length...";
         } else {
           infodiv.innerHTML = "Done!";
           textFromServer = this.responseText;
