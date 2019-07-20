@@ -201,8 +201,8 @@ function createResult(blob) {
           isFigureThere = true;
         }
       };
-      targetURL = "https://pitchanal.smcnus.org/mandarin-pitch-tracking-crepe";
-      pyinURL = "https://pitchanal.smcnus.org/mandarin-pitch-tracking-pyin";
+      targetURL = "https://pitchtrack.smcnus.org/mandarin-pitch-tracking-crepe";
+      pyinURL = "https://pitchtrack.smcnus.org/mandarin-pitch-tracking-pyin";
       xhttp.open("POST", pyinURL, true);
       var wavobj = {
         sr: currentSampleRate,
